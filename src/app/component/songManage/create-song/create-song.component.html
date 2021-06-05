@@ -1,0 +1,34 @@
+<div class="container">
+    <div class="row">
+        <div class="col-12" style="margin-top: 20px">
+            <mat-card style="margin: 50px 0">
+                <form class="form-create-song" #f="ngForm" (ngSubmit)="f.form.valid&&ngSubmit()" novalidate>
+                    <mat-error class="alert alert-primary">{{status}}</mat-error>
+                    <mat-form-field style="width: 350px" appearance="outline">
+                        <mat-label>Name Song</mat-label>
+                        <input matInput name="nameSong" [(ngModel)]="form.nameSong" #nameSong="ngModel" required>
+                        <mat-icon color="accent" matSuffix>music_video</mat-icon>
+                        <mat-error *ngIf="nameSong.hasError('required')">The name song is required</mat-error>
+                    </mat-form-field> <br>
+                    <mat-form-field style="width: 350px" appearance="fill">
+                        <mat-label>lyrics</mat-label>
+                        <textarea name="lyrics" matInput [ngModel]="form.lyrics" #lyrics="ngModel" required></textarea>
+                        <mat-icon color="accent" matSuffix>list_alt</mat-icon>
+                        <mat-error *ngIf="lyrics.hasError('required')">The lyrics is required!</mat-error>
+                    </mat-form-field>
+                    <mat-error *ngIf="!addFileMp3">
+                        Please upload File MP3
+                    </mat-error>
+                    <app-upload-file (giveURLtoCreate)="onMp3Url($event)"></app-upload-file> <br>
+                    <mat-error *ngIf="!addAvatar">
+                        Please upload Avatar
+                    </mat-error>
+                        <app-upload-avatar class="upload-avatar" (giveURLtoCreate)="onAvatar($event)"></app-upload-avatar>
+                    <button mat-stroked-button color="accent" class="mat-button-toggle-group btn-outline-primary">
+                        <mat-icon color="accent" matPrefix>add_box</mat-icon>
+                        Create Song </button>
+                </form>
+            </mat-card>
+        </div>
+    </div>
+</div>
