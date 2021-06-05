@@ -3,26 +3,18 @@ import {AngularFireStorageReference, AngularFireStorage} from "@angular/fire/sto
 import { HttpClient } from '@angular/common/http';
 
 @Component({
-  selector: 'app-upload-avatar',
-  templateUrl: './upload-avatar.component.html',
-  styleUrls: ['./upload-avatar.component.scss']
+  selector: 'app-upload-file',
+  templateUrl: './upload-file.component.html',
+  styleUrls: ['./upload-file.component.scss']
 })
-export class UploadAvatarComponent implements OnInit {
-
-
+export class UploadFileComponent implements OnInit {
   selectedFile: File;
   ref: AngularFireStorageReference;
   downloadURL: string;
-  checkUploadAvatar = false;
   @Output()
   giveURLtoCreate = new EventEmitter<string>();
 
-  @Output() sendAvatarUrl = new EventEmitter<string>();
-
-  constructor(private httpClient: HttpClient,
-              private afStorage: AngularFireStorage,
-              // private songService: SongService
-  ) {
+  constructor(private httpClient: HttpClient, private afStorage: AngularFireStorage) {
   }
 
   ngOnInit() {
@@ -33,7 +25,6 @@ export class UploadAvatarComponent implements OnInit {
   }
 
   onUpload() {
-    console.log('upload file');
     const id = Math.random().toString(36).substring(2); // Create a random string
     this.ref = this.afStorage.ref(id);
     this.ref.put(this.selectedFile)
@@ -43,9 +34,7 @@ export class UploadAvatarComponent implements OnInit {
         .then(downloadURL => {
           this.downloadURL = downloadURL;
           this.giveURLtoCreate.emit(this.downloadURL);
-          console.log(downloadURL);
-          this.sendAvatarUrl.emit(downloadURL);
-          this.checkUploadAvatar = true;
+          // console.log(downloadURL);
           return downloadURL;
         })
         .catch(error => {
@@ -53,5 +42,4 @@ export class UploadAvatarComponent implements OnInit {
           console.log(`Failed to upload file and get link - ${error}`);
         });
   }
-
 }

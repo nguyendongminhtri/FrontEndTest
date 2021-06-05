@@ -12,7 +12,9 @@ import {SignInForm} from "../model/SignInForm";
 export class AuthService {
 //API SERVER
   private API_SIGNUP = environment.API_SEVER+'signup'
-  private API_SIGNIN = environment.API_SEVER+'signin'
+  // private API_SIGNIN = environment.API_SEVER+'signin'
+  //API LOCAL
+  private API_SIGNIN = 'http://localhost:8080/api/auth/signin'
   constructor(private http: HttpClient ) { }
   signUp(signUpForm: SignUpForm): Observable<any>{
     return this.http.post<any>(this.API_SIGNUP, signUpForm)

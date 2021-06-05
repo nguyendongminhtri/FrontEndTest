@@ -29,6 +29,8 @@ export class TokenService {
   public getRoleKey(): string[]{
     this.roles = [];
     if(sessionStorage.getItem(TOKEN_KEY)){
+      console.log('getRoleKey == ', sessionStorage.getItem(ROLE_KEY))
+      console.log('JSON.pa --->',JSON.parse(sessionStorage.getItem(ROLE_KEY)))
       JSON.parse(sessionStorage.getItem(ROLE_KEY)).forEach(role =>{
         this.roles.push(role.authority)
       })

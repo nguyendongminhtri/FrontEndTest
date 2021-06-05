@@ -26,6 +26,9 @@ export class RegisterComponent implements OnInit {
   success: any = {
     message: "yes"
   }
+  test = '{ "myString": "string", "myNumber": 4 }'
+  test2: any = [{"authority": "ADMIN"}]
+roles: any = [];
   constructor(private authService: AuthService) { }
 
   ngOnInit(): void {
@@ -39,7 +42,16 @@ export class RegisterComponent implements OnInit {
     )
     this.authService.signUp(this.signUpForm).subscribe(data =>{
       console.log('data == ',data)
-      if(JSON.stringify(data)==JSON.stringify(this.error1)){
+      this.test2.push("admin")
+
+      this.test2.forEach(role =>{
+        console.log("role ==== ",role.authority)
+        this.roles.push(role.authority)
+        console.log('roles ---->', this.roles)
+        console.log(JSON.parse(this.roles))
+      })
+      console.log('test = ', JSON.parse(this.test))
+      if(JSON.stringify(data)==JSON.stringify(this.test2)){
         this.status = 'The name is existed! Please try again!'
       }
       if(JSON.stringify(data)==JSON.stringify(this.error2)){

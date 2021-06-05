@@ -36,12 +36,23 @@ import {MatInputModule} from "@angular/material/input";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import { LoginComponent } from './form-login/login/login.component';
 import { UserAccountComponent } from './form-login/user-account/user-account.component';
+import { UploadAvatarComponent } from './upload/upload-avatar/upload-avatar.component';
+import { UploadFileComponent } from './upload/upload-file/upload-file.component';
+import {AngularFireStorageModule} from "@angular/fire/storage";
+import {AngularFireModule} from "@angular/fire";
+import {environment} from "../environments/environment.prod";
+import {httpInterceptorProviders} from "./service/auth.interceptor";
+import { CreateSongComponent } from './component/songManage/create-song/create-song.component';
+import { PageSongComponent } from './component/songManage/page-song/page-song.component';
+import {MatPaginatorModule} from "@angular/material/paginator";
 
 export const appRoutes: Routes = [
   { path: '', component: HomeComponent, data: { title: 'Home' } },
   { path: 'register', component: RegisterComponent, data: {title: 'Register'}},
   { path: 'login', component: LoginComponent, data: {title: 'Login'}},
   {path: 'user-account', component: UserAccountComponent, data: {title: 'UserAccount'}},
+  { path: 'create-song', component: CreateSongComponent, data: {title: 'CreateSong'}},
+  {path: 'page-song', component: PageSongComponent, data: {title: 'PageSong'}},
   {
     path: 'guide/getting-started',
     component: GettingStartedComponent,
@@ -50,7 +61,7 @@ export const appRoutes: Routes = [
 ];
 
 @NgModule({
-  declarations: [AppComponent, HomeComponent, GettingStartedComponent, RegisterComponent, LoginComponent, UserAccountComponent],
+  declarations: [AppComponent, HomeComponent, GettingStartedComponent, RegisterComponent, LoginComponent, UserAccountComponent, UploadAvatarComponent, UploadFileComponent, CreateSongComponent, PageSongComponent],
   imports: [
     HttpClientModule,
     BrowserModule,
@@ -61,13 +72,15 @@ export const appRoutes: Routes = [
     MatRadioModule,
     MatCheckboxModule,
     MatSlideToggleModule,
+    AngularFireStorageModule, //import Firebase
+    AngularFireModule.initializeApp(environment.firebaseConfig),
     MatButtonModule,
     BrowserAnimationsModule,
     NavBarModule, FooterModule,
     NgxAudioPlayerModule,
-    RouterModule.forRoot(appRoutes, {useHash: false}), MatFormFieldModule, MatInputModule, FormsModule, ReactiveFormsModule
+    RouterModule.forRoot(appRoutes, {useHash: false}), MatFormFieldModule, MatInputModule, FormsModule, ReactiveFormsModule, MatPaginatorModule
   ],
-  providers: [],
+  providers: [httpInterceptorProviders],
   bootstrap: [AppComponent]
 })
 export class AppModule {
